@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>439152955334-ls30jujdn64gjo7ql7s2sos0rd5aorvi.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.439152955334-ls30jujdn64gjo7ql7s2sos0rd5aorvi</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCvukFXFVhHiLUKLKu-bYBLc0RpuecaCeY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>439152955334</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.carboni.CarGuy</string>
+	<key>PROJECT_ID</key>
+	<string>carguy-9cc70</string>
+	<key>STORAGE_BUCKET</key>
+	<string>carguy-9cc70.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:439152955334:ios:3087689f27d9eccf57ecc7</string>
+</dict>
+</plist>
