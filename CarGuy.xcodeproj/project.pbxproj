@@ -20,6 +20,8 @@
 		999F14922833FBBB0006573C /* CarCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999F14912833FBBB0006573C /* CarCard.swift */; };
 		999F1494283438B90006573C /* CarInGarage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999F1493283438B90006573C /* CarInGarage.swift */; };
 		999F149628343B290006573C /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999F149528343B290006573C /* ImageLoader.swift */; };
+		99E895F928363CF90097A7C5 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E895F828363CF90097A7C5 /* LoginModel.swift */; };
+		99E895FB2836462D0097A7C5 /* APIcall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E895FA2836462D0097A7C5 /* APIcall.swift */; };
 		99E8CFEC28354A9D0013BD6D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 99E8CFEB28354A9D0013BD6D /* FirebaseAuth */; };
 		99E8CFEE28354A9D0013BD6D /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 99E8CFED28354A9D0013BD6D /* FirebaseFirestore */; };
 		99E8CFF028354A9D0013BD6D /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 99E8CFEF28354A9D0013BD6D /* FirebaseFirestoreSwift */; };
@@ -44,6 +46,8 @@
 		999F14912833FBBB0006573C /* CarCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarCard.swift; sourceTree = "<group>"; };
 		999F1493283438B90006573C /* CarInGarage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInGarage.swift; sourceTree = "<group>"; };
 		999F149528343B290006573C /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		99E895F828363CF90097A7C5 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		99E895FA2836462D0097A7C5 /* APIcall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIcall.swift; sourceTree = "<group>"; };
 		99E8CFF528354B3D0013BD6D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		99E8CFF728354D950013BD6D /* LoginSignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSignupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +89,7 @@
 			children = (
 				99E8CFF528354B3D0013BD6D /* GoogleService-Info.plist */,
 				99E8CFF728354D950013BD6D /* LoginSignupView.swift */,
+				99E895F828363CF90097A7C5 /* LoginModel.swift */,
 				999F147B2833C9E60006573C /* CarGuyApp.swift */,
 				999F147D2833C9E60006573C /* GarageView.swift */,
 				999F1493283438B90006573C /* CarInGarage.swift */,
@@ -97,6 +102,7 @@
 				999F147F2833C9E80006573C /* Assets.xcassets */,
 				999F14812833C9E80006573C /* Preview Content */,
 				999F14892833CAE90006573C /* MainView.swift */,
+				99E895FA2836462D0097A7C5 /* APIcall.swift */,
 				999F149528343B290006573C /* ImageLoader.swift */,
 			);
 			path = CarGuy;
@@ -195,10 +201,12 @@
 				9906620A2834E84E000745FD /* NotificationsView.swift in Sources */,
 				999F148E2833D3AE0006573C /* GuysView.swift in Sources */,
 				999F147E2833C9E60006573C /* GarageView.swift in Sources */,
+				99E895FB2836462D0097A7C5 /* APIcall.swift in Sources */,
 				999F148A2833CAEA0006573C /* MainView.swift in Sources */,
 				999F147C2833C9E60006573C /* CarGuyApp.swift in Sources */,
 				99E8CFF828354D950013BD6D /* LoginSignupView.swift in Sources */,
 				999F149628343B290006573C /* ImageLoader.swift in Sources */,
+				99E895F928363CF90097A7C5 /* LoginModel.swift in Sources */,
 				999F14902833D3ED0006573C /* ProfileView.swift in Sources */,
 				9906620C2834EABE000745FD /* CircleImage.swift in Sources */,
 				999F14922833FBBB0006573C /* CarCard.swift in Sources */,

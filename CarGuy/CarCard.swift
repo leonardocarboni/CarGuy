@@ -38,7 +38,7 @@ struct CarCard: View {
                 }
                 .padding ()
             }
-            .background(Color.white).clipShape(RoundedRectangle(cornerRadius: 20)).shadow(color: .gray, radius: 7, x: 2, y: 2)
+            .background().clipShape(RoundedRectangle(cornerRadius: 20)).shadow(color: .gray, radius: 7, x: 2, y: 2)
             .padding([.top, .horizontal])
         }
         
@@ -47,7 +47,7 @@ struct CarCard: View {
 
 struct CarCard_Previews: PreviewProvider {
     static var previews: some View {
-        CarCard(car: CarInGarage(brand: "Lamborghini", model: "Aventador SVJ", year: 2020, imageUrl: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/lamborghini-aventador-svj-01-1536325819.jpg?crop=1.00xw:0.753xh;0,0.0929xh&resize=1200:*"))
+        CarCard(car: CarInGarage(brand: "Lamborghini", model: "Aventador SVJ", year: 2020, imageUrl: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/lamborghini-aventador-svj-01-1536325819.jpg?crop=1.00xw:0.753xh;0,0.0929xh&resize=1200:*")).environment(\.colorScheme, .dark)
     }
 }
 
@@ -145,5 +145,6 @@ struct RequireAssistanceSheet: View {
             }.background(Color.blue).foregroundColor(.white).clipShape(RoundedRectangle(cornerRadius: 10)).padding()
             
         }
+        //TODO: FIX DARK MODE
     }
 }

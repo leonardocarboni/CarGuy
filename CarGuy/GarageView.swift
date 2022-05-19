@@ -42,27 +42,47 @@ struct GarageView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        GarageView()
+        AddCarView()
     }
 }
 
 struct AddCarView: View {
-    
-    @State private var selectedStrength: String?
-    let strengths = ["Audi", "BMW", "Mercedes Benz"]
+    @ObservedObject var fetch = FetchCars()
+    @State private var selectedManufacturer: Int?
+    @State private var selectedCar: String?
     
     var body: some View {
-        
-        Form {
-            Section{
-                Picker("Brand", selection: $selectedStrength) {
-                    Text("Seleziona").tag(nil as String?)
-                    ForEach(strengths, id: \.self) {
-                        Text($0).tag($0 as String?)
+        VStack{
+            Form {
+                Section{
+                    Picker("Brand", selection: $selectedManufacturer) {
+                        Text("Seleziona").tag(nil as String?)
+                        ForEach(fetch.manufacturerCars) { manufacturer in
+                            Text(manufacturer.name.capitalized).tag(manufacturer.id as Int?)
+                        }
+                    }
+                    Picker("Modello", selection: $selectedCar) {
+                        Text("Seleziona").tag(nil as String?)
+                        if selectedManufacturer != nil {
+                            let cars = fetch.manufacturerCars.filter({$0.id == selectedManufacturer!}).first!
+                            ForEach(cars.carsProduced) { car in
+                                Text(car.model.capitalized).tag(car.model as String?)
+                            }
+                        } else {
+                            
+                        }
                     }
                 }
-            }
+            }.onAppear {
+                UITableView.appearance().backgroundColor = .systemBackground
+             }.padding()
             
+            Button(action: {}) {
+                Text("Aggiungi al garage")
+                    .padding()
+                    .frame(maxWidth: .infinity)
+            }.background(Color.blue).foregroundColor(.white).clipShape(RoundedRectangle(cornerRadius: 10)).padding()
         }
     }
 }
+
