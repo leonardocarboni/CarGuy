@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct LoginSignupView: View {
+    @ObservedObject var model: LoginModelData
+    
     @State var signup = false
     var body: some View {
         VStack {
@@ -17,9 +20,9 @@ struct LoginSignupView: View {
             //            ZStack{
             if signup {
                 
-                SignUpView().transition(.move(edge: .trailing).animation(.easeOut(duration: 0.4))).zIndex(1)
+                SignUpView(model: model).transition(.move(edge: .trailing).animation(.easeOut(duration: 0.4))).zIndex(1)
             } else {
-                LoginView().transition(.move(edge: .leading).animation(.easeOut(duration: 0.4))).zIndex(0)
+                LoginView(model: model).transition(.move(edge: .leading).animation(.easeOut(duration: 0.4))).zIndex(0)
             }
             //            }
             Spacer()
@@ -39,40 +42,8 @@ struct LoginSignupView: View {
     }
 }
 
-class ModelData: ObservableObject {
-    @Published var email = ""
-    @Published var password = ""
-    @Published var isSignedUp = false
-    @Published var name_signup = ""
-    @Published var email_signup = ""
-    @Published var password_signup = ""
-    @Published var resetEmail = ""
-    @Published var isLinkSent = false
-    @Published var isResetPresented = false
-    
-    func resetPassword() {
-        let alert = UIAlertController(title:"Reset Password", message: "Inserisci la tua email", preferredStyle: .alert)
-        alert.addTextField{ (password) in
-            password.placeholder = "Email"
-        }
-        let reset = UIAlertAction(title: "Reset", style: .default) { (_) in
-            self.resetEmail = alert.textFields![0].text!
-            self.isLinkSent.toggle()
-        }
-        
-        let cancel = UIAlertAction(title: "Annulla", style: .destructive, handler: nil)
-        
-        alert.addAction(cancel)
-        alert.addAction(reset)
-        
-        //Deprecato, non ho trovato soluzioni conformi al pattern MVVM
-        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true)
-    }
-    
-}
-
 struct LoginView: View {
-    @StateObject var model = ModelData()
+    @ObservedObject var model: LoginModelData
     
     var body: some View {
         VStack{
@@ -82,6 +53,7 @@ struct LoginView: View {
                 TextField(text: $model.email){
                     Text("E-mail")
                 }
+                .keyboardType(.emailAddress).textContentType(.emailAddress)
                 Divider()
             }.padding()
             VStack (alignment: .leading) {
@@ -91,27 +63,31 @@ struct LoginView: View {
                 }
                 Divider()
             }.padding()
-            
-            HStack{
-                Text("Accedi").font(.subheadline)
-                Spacer()
-                Image(systemName: "arrow.forward.circle.fill")
-            }.frame(width: 100, height: 10)
-                .padding()
-                .foregroundColor(.white)
-                .background(Color.blue)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+            Button(action: model.loginUser){
+                HStack{
+                    Text("Accedi").font(.subheadline)
+                    Spacer()
+                    Image(systemName: "arrow.forward.circle.fill")
+                }.frame(width: 100, height: 10)
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
             Spacer()
             Button(action: model.resetPassword) {
                 Text("Hai dimenticato la password?")
             }.padding()
         }.alert(isPresented: $model.isLinkSent){
             Alert(title: Text("Password Resettata"), message: Text("Il link per il reset della password è stato inviato alla tua e-mail"), dismissButton: .cancel(Text("Ok")))}
+        .alert(isPresented: $model.alert, content: {
+            Alert(title: Text("Message"), message: Text(model.alertMsg), dismissButton: .destructive(Text("Ok")))
+        })
     }
 }
 
 struct SignUpView: View {
-    @StateObject var model = ModelData()
+    @ObservedObject var model : LoginModelData
     
     var body: some View {
         VStack{
@@ -128,7 +104,7 @@ struct SignUpView: View {
                 Text("E-Mail")
                 TextField(text: $model.email_signup){
                     Text("E-mail")
-                }
+                }.keyboardType(.emailAddress).textContentType(.emailAddress)
                 Divider()
             }.padding()
             
@@ -139,23 +115,19 @@ struct SignUpView: View {
                 }
                 Divider()
             }.padding()
-            
-            HStack{
-                Text("Registrati").font(.subheadline)
-                Spacer()
-                Image(systemName: "arrow.forward.circle.fill")
-            }.frame(width: 100, height: 10)
-                .padding()
-                .foregroundColor(.white)
-                .background(Color.blue)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-            
-        }
-    }
-}
-
-struct LoginSignupView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginSignupView()
+            Button(action: model.signupUser){
+                HStack{
+                    Text("Registrati").font(.subheadline)
+                    Spacer()
+                    Image(systemName: "arrow.forward.circle.fill")
+                }.frame(width: 100, height: 10)
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color.blue)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+            }
+        }.alert(isPresented: $model.alert, content: {
+            Alert(title: Text("Message"), message: Text(model.alertMsg), dismissButton: .destructive(Text("Ok")))
+        })
     }
 }

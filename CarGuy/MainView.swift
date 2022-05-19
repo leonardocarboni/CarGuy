@@ -15,13 +15,13 @@ enum Tabs:String {
 }
 
 struct MainView: View {
-    //TODO: DYNAMIZE
-    @State var isLogged: Bool = false
+    @AppStorage("log_status") var isLogged = false
+    @StateObject var loginModel = LoginModelData()
     
     @State var selectedTab: Tabs = .garage
     var body: some View {
         if !isLogged {
-            LoginSignupView()
+            LoginSignupView(model: loginModel)
         } else {
             TabView (selection: $selectedTab){
                 NavigationView{
@@ -76,6 +76,6 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        MainView()//.environment(\.colorScheme, .dark)
     }
 }
