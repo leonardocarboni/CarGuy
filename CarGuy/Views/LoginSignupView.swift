@@ -12,33 +12,38 @@ struct LoginSignupView: View {
     @ObservedObject var model: LoginModelData
     
     @State var signup = false
+    
     var body: some View {
-        VStack {
-            
-            Image("AppLogo").resizable().scaledToFit().padding(.all, 40)
-            
-            //            ZStack{
-            if signup {
+        
+        ZStack {
+            VStack {
+                Image("AppLogo").resizable().scaledToFit().padding(.all, 40)
                 
-                SignUpView(model: model).transition(.move(edge: .trailing).animation(.easeOut(duration: 0.4))).zIndex(1)
-            } else {
-                LoginView(model: model).transition(.move(edge: .leading).animation(.easeOut(duration: 0.4))).zIndex(0)
-            }
-            //            }
-            Spacer()
-            Button(action: {
-                
-                withAnimation() {
-                    signup.toggle()
-                }
-            }) {
                 if signup {
-                    Text("Hai già un'account? Accedi")
+                    SignUpView(model: model).transition(.move(edge: .trailing).animation(.easeOut(duration: 0.4))).zIndex(1)
                 } else {
-                    Text("Non hai un'account? Registrati")
+                    LoginView(model: model).transition(.move(edge: .leading).animation(.easeOut(duration: 0.4))).zIndex(0)
                 }
+                
+                Spacer()
+                
+                Button(action: {
+                    withAnimation() {
+                        signup.toggle()
+                    }
+                }) {
+                    if signup {
+                        Text("Hai già un'account? Accedi")
+                    } else {
+                        Text("Non hai un'account? Registrati")
+                    }
+                }.padding()
             }.padding()
-        }.padding()
+            
+            if model.isLoading {
+                LoadingView()
+            }
+        }
     }
 }
 
@@ -48,6 +53,7 @@ struct LoginView: View {
     var body: some View {
         VStack{
             Text("Accedi").font(.largeTitle).bold()
+            
             VStack (alignment: .leading) {
                 Text("E-Mail")
                 TextField(text: $model.email){
@@ -56,6 +62,7 @@ struct LoginView: View {
                 .keyboardType(.emailAddress).textContentType(.emailAddress)
                 Divider()
             }.padding()
+            
             VStack (alignment: .leading) {
                 Text("Password")
                 SecureField(text: $model.password){
@@ -63,6 +70,7 @@ struct LoginView: View {
                 }
                 Divider()
             }.padding()
+            
             Button(action: model.loginUser){
                 HStack{
                     Text("Accedi").font(.subheadline)
@@ -74,14 +82,17 @@ struct LoginView: View {
                     .background(Color.blue)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
+            
             Spacer()
+            
             Button(action: model.resetPassword) {
                 Text("Hai dimenticato la password?")
             }.padding()
+            
         }.alert(isPresented: $model.isLinkSent){
             Alert(title: Text("Password Resettata"), message: Text("Il link per il reset della password è stato inviato alla tua e-mail"), dismissButton: .cancel(Text("Ok")))}
         .alert(isPresented: $model.alert, content: {
-            Alert(title: Text("Message"), message: Text(model.alertMsg), dismissButton: .destructive(Text("Ok")))
+            Alert(title: Text("Attenzione"), message: Text(model.alertMsg), dismissButton: .cancel(Text("Ok")))
         })
     }
 }
@@ -92,6 +103,7 @@ struct SignUpView: View {
     var body: some View {
         VStack{
             Text("Registrati").font(.largeTitle).bold()
+            
             VStack (alignment: .leading) {
                 Text("Nome")
                 TextField(text: $model.name_signup){
@@ -115,7 +127,10 @@ struct SignUpView: View {
                 }
                 Divider()
             }.padding()
-            Button(action: model.signupUser){
+            
+            Button(action: {
+                model.signupUser()
+            }){
                 HStack{
                     Text("Registrati").font(.subheadline)
                     Spacer()
@@ -126,8 +141,32 @@ struct SignUpView: View {
                     .background(Color.blue)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
             }
+            
         }.alert(isPresented: $model.alert, content: {
             Alert(title: Text("Message"), message: Text(model.alertMsg), dismissButton: .destructive(Text("Ok")))
+        })
+    }
+}
+
+/**
+ View di caricamento
+ */
+struct LoadingView: View {
+    @State var animation = false
+    var body: some View {
+        VStack{
+            VStack{
+                Circle().trim(from: 0, to: 0.7)
+                    .stroke(.blue, lineWidth: 8)
+                    .frame(width: 75, height: 75)
+                    .rotationEffect(.init(degrees: animation ? 360 : 0))
+                    .padding(50)
+            }.background(.background).cornerRadius(20)
+        }
+        .onAppear(perform: {
+            withAnimation(Animation.linear(duration: 1)){
+                animation.toggle()
+            }
         })
     }
 }
