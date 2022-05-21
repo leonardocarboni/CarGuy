@@ -15,10 +15,11 @@ struct ChatsView: View {
             ForEach(chatsManager.chats, id: \.self) {chat in
                 NavigationLink(destination: MessagesView(messagesManager: chat.messagesManager).navigationTitle(chat.toName)){
                     HStack {
-                        CircleImage(imageUrl: "https://images.unsplash.com/photo-1616767709128-073bb5c6503d?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8dG93SlpGc2twR2d8fGVufDB8fHx8&auto=format&fit=crop&w=500", diameter: 50, shadowRadius: 0).padding()
+                        if chat.toPfpUrl != "" {
+                            CircleImage(imageUrl: chat.toPfpUrl, diameter: 50, shadowRadius: 0).padding()
+                        }
                         VStack (alignment: .leading){
                             Text(chat.toName).font(.title3).bold()
-//                            Text(chat.messagesManager.messages.last!.text).lineLimit(1).font(.body)
                         }
                         Spacer()
                         Image(systemName: "chevron.forward.circle.fill").resizable().scaledToFit().frame(width: 30, height: 30).padding()

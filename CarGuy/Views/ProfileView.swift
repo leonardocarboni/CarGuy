@@ -26,8 +26,8 @@ struct ProfileView: View {
                     Text("Auto")
                 }.frame(minWidth: 0, maxWidth: .infinity)
                 VStack{
-                    Text("5").font(.title).bold()
-                    Text("Assistenze")
+                    Text(String(userModel.reviews.count)).font(.title).bold()
+                    Text("Recensioni")
                 }.frame(minWidth: 0, maxWidth: .infinity)
                 VStack{
                     if userModel.avgStars != nil {
