@@ -6,14 +6,6 @@
 //
 
 import SwiftUI
-import MapKit
-
-//private var reviews = [
-//    Review(text: "Detailing fantastico, ma si fa pagare troppo", stars: 4, from: "Maurizio Marri", pfpUrl: "https://magazine.unibo.it/archivio/2018/inaugurato-il-nuovo-campus-di-cesena-allex-zuccherificio/cesena2.jpeg"),
-//    Review(text: "Fantastico e davvero professionale, uno dei migliori nella zona di Napoli", stars: 5, from: "Maurizio Marri", pfpUrl: "https://magazine.unibo.it/archivio/2018/inaugurato-il-nuovo-campus-di-cesena-allex-zuccherificio/cesena2.jpeg"),
-//    Review(text: "Fantastico e davvero professionale", stars: 5, from: "Maurizio Marri", pfpUrl: "https://magazine.unibo.it/archivio/2018/inaugurato-il-nuovo-campus-di-cesena-allex-zuccherificio/cesena2.jpeg"),
-//    Review(text: "Fantastico e davvero professionale", stars: 3, from: "Maurizio Marri", pfpUrl: "https://magazine.unibo.it/archivio/2018/inaugurato-il-nuovo-campus-di-cesena-allex-zuccherificio/cesena2.jpeg"),
-//]
 
 struct ProfileView: View {
     @StateObject var userModel = UserModel()
@@ -38,7 +30,11 @@ struct ProfileView: View {
                     Text("Assistenze")
                 }.frame(minWidth: 0, maxWidth: .infinity)
                 VStack{
-                    Text("4.5").font(.title).bold()
+                    if userModel.avgStars != nil {
+                        Text(String(format: "%.1f", userModel.avgStars!)).font(.title).bold()
+                    } else {
+                        Text("N.D").font(.title).bold()
+                    }
                     Text("Stelle")
                 }.frame(minWidth: 0, maxWidth: .infinity)
             }.padding()

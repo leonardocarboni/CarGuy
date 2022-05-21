@@ -16,8 +16,9 @@ class UserModel: ObservableObject {
     @Published var pfpUrl = ""
     @Published var reviews = [Review]()
     @Published var nCars = 0
+    @Published var avgStars: Float?
     let db = Firestore.firestore()
-
+    
     init() {
         getUserData()
     }
@@ -42,14 +43,49 @@ class UserModel: ObservableObject {
                     self.pfpUrl = data["pfpUrl"] as! String
                 }
                 
-                self.db.collection("users").document("\(currentUid)").collection("reviews").getDocuments{ doc, err in
+                self.db.collection("users").document("\(currentUid)").collection("cars").getDocuments{ doc, err in
                     if err != nil {
                         print ("Empty doc")
                         return
                     }
-                    
-                    //get reviews
-                    
+                    self.nCars = doc!.documents.count
+                }
+                
+                self.db.collection("users").document("\(currentUid)").collection("reviews").getDocuments{ doc, err in
+                    if err != nil {
+                        print ("Error Fetching Reviews")
+                        return
+                    }
+                    if doc!.documents.count > 0 {
+                        var starsSum = 0
+                        for r in doc!.documents {
+                            let rData = r.data()
+                            let rId = rData["id"] as! String
+                            let rText = rData["text"] as! String
+                            let rStars = rData["stars"] as! Int
+                            let reviewerUid = rData["reviewerUid"] as! String
+                            var reviewerPfp = ""
+                            var reviewerName = ""
+                            starsSum += rStars
+                            
+                            self.db.collection("users").document("\(reviewerUid)").getDocument{ userDoc, userErr in
+                                if userErr != nil {
+                                    print("Error fetching user")
+                                    self.reviews.append(Review(id: rId, text: rText, stars: rStars, from: reviewerName, pfpUrl: reviewerPfp))
+                                    return
+                                }
+                                guard let userData = userDoc!.data() else {
+                                    print("Error fetching user")
+                                    self.reviews.append(Review(id: rId, text: rText, stars: rStars, from: reviewerName, pfpUrl: reviewerPfp))
+                                    return
+                                }
+                                reviewerPfp = userData["pfpUrl"] as! String
+                                reviewerName = userData["name"] as! String
+                                self.reviews.append(Review(id: rId, text: rText, stars: rStars, from: reviewerName, pfpUrl: reviewerPfp))
+                            }
+                        }
+                        self.avgStars = Float(starsSum) / Float(doc!.documents.count)
+                    }
                 }
             }
         }

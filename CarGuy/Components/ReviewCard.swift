@@ -12,7 +12,9 @@ struct ReviewCard: View {
     
     var body: some View {
         HStack{
-            CircleImage(imageUrl: review.pfpUrl, diameter: 100).frame(width: 120)
+            if review.pfpUrl != "" {
+                CircleImage(imageUrl: review.pfpUrl, diameter: 100).frame(width: 120)
+            }
             VStack(alignment: .leading, spacing: 10) {
                 Text(review.from).font(.system(size: 26, weight: .bold, design: .default))
                 Text(review.text).font(.body)
@@ -63,9 +65,9 @@ struct Rating: View {
     }
 }
 
-
-struct ReviewCard_Previews: PreviewProvider {
-    static var previews: some View {
-        ReviewCard(review: Review(text: "Testo di prova", stars: 4, from: "Mauro", pfpUrl: "https://magazine.unibo.it/archivio/2018/inaugurato-il-nuovo-campus-di-cesena-allex-zuccherificio/cesena2.jpeg"))
-    }
-}
+//
+//struct ReviewCard_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ReviewCard(review: Review(text: "Testo di prova", stars: 4, from: "Mauro", pfpUrl: "https://magazine.unibo.it/archivio/2018/inaugurato-il-nuovo-campus-di-cesena-allex-zuccherificio/cesena2.jpeg"))
+//    }
+//}

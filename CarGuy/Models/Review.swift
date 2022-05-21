@@ -8,7 +8,7 @@
 import Foundation
 
 struct Review: Identifiable {
-    let id = UUID()
+    let id : String
     let text : String
     let stars: Int
     let from: String

@@ -23,7 +23,6 @@ struct CarCard: View {
     
     @ObservedObject var imageLoader = ImageLoader()
     @State var car: CarInGarage
-    // MARK: - Properties
     @State private var goToNewView: Bool = false
     
     var body: some View {
@@ -42,9 +41,9 @@ struct CarCard: View {
                 }
                 HStack {
                     VStack(alignment: .leading) {
-                        Text (String(car.year)).font(.headline).foregroundColor(.secondary)
-                        Text (car.model).font(.title).fontWeight(.black).foregroundColor(.primary).lineLimit(3)
-                        Text (car.brand).font(.title3).foregroundColor(.secondary)
+                        Text (String(car.year)).font(.headline).foregroundColor(.secondary).shadow(color: .black, radius: 1)
+                        Text (car.model).font(.title).fontWeight(.black).foregroundColor(.primary).lineLimit(1).shadow(color: .black, radius: 2)
+                        Text (car.brand).font(.title3).foregroundColor(.secondary).shadow(color: .black, radius: 1)
                     }
                     .layoutPriority(100)
                     Spacer()
