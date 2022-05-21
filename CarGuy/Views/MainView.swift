@@ -53,12 +53,9 @@ struct MainView: View {
                 NavigationView{
                     ProfileView().navigationTitle("Profile")
                         .navigationBarItems(trailing:
-                                                HStack {
-                            Image(systemName: "square.and.pencil")
-                            Button(action: {
-                                self.logoutRequested = true
-                            }) {Image(systemName: "person.fill.xmark").foregroundColor(.primary)}
-                        }).confirmationDialog("Effettuare il logout?", isPresented: $logoutRequested) {
+                                                Button(action: {
+                            self.logoutRequested = true
+                        }) {Image(systemName: "person.fill.xmark").foregroundColor(.primary)}).confirmationDialog("Effettuare il logout?", isPresented: $logoutRequested) {
                             Button("Logout", role: .destructive) {
                                 loginModel.logOut()
                                 self.logoutRequested = false

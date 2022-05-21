@@ -115,9 +115,9 @@ struct RequireAssistanceSheet: View {
         //TODO: FIX DARK MODE
     }
 }
-
-struct CarDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        CarDetailsView()
-    }
-}
+//
+//struct CarDetailsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CarDetailsView(car: CarInGarage(id: "0", brand: "Test", model: "Sample", year: 123, addTimestamp: Date()))
+//    }
+//}

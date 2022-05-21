@@ -9,6 +9,9 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import FirebaseStorage
+import UIKit
+import SwiftUI
 
 class UserModel: ObservableObject {
     @Published var email = ""
@@ -17,6 +20,8 @@ class UserModel: ObservableObject {
     @Published var reviews = [Review]()
     @Published var nCars = 0
     @Published var avgStars: Float?
+    @Published var updating = false
+    
     let db = Firestore.firestore()
     
     init() {
@@ -51,7 +56,7 @@ class UserModel: ObservableObject {
                     self.nCars = doc!.documents.count
                 }
                 
-                self.db.collection("users").document("\(currentUid)").collection("reviews").getDocuments{ doc, err in
+                self.db.collection("users").document("\(currentUid)").collection("reviews").addSnapshotListener{ doc, err in
                     if err != nil {
                         print ("Error Fetching Reviews")
                         return
@@ -67,7 +72,7 @@ class UserModel: ObservableObject {
                             var reviewerPfp = ""
                             var reviewerName = ""
                             starsSum += rStars
-                            
+                            self.reviews.removeAll()
                             self.db.collection("users").document("\(reviewerUid)").getDocument{ userDoc, userErr in
                                 if userErr != nil {
                                     print("Error fetching user")
@@ -88,6 +93,42 @@ class UserModel: ObservableObject {
                     }
                 }
             }
+        }
+    }
+    
+    func updateUserDetails(name: String, pfp: UIImage?) {
+        withAnimation{
+            self.updating = true
+        }
+        let currentUid = Firebase.Auth.auth().currentUser!.uid
+        
+        if pfp != nil {
+            let ref = FirebaseStorage.Storage.storage().reference(withPath: "profilePictures/\(currentUid).jpg")
+            if let imageData = pfp!.jpegData(compressionQuality: 0.5) {
+                ref.putData(imageData){ metadata, error in
+                    if error != nil {
+                        print("Couldn't upload image to storage.")
+                    }
+                    ref.downloadURL{url, err in
+                        if err != nil {
+                            print("Failed to retrieve download url")
+                        } else {
+                            let imageUrl = url!.absoluteString
+                            self.db.collection("users").document(currentUid).updateData([
+                                "name": "\(name)",
+                                "pfpUrl": imageUrl
+                            ])
+                        }
+                    }
+                }
+            }
+        } else {
+            self.db.collection("users").document(currentUid).updateData([
+                "name": "\(name)"
+            ])
+        }
+        withAnimation{
+            self.updating = false
         }
     }
 }
