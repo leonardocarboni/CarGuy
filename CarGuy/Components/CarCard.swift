@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+extension Image {
+    func centerCropped() -> some View {
+        GeometryReader { geo in
+            self
+                .resizable()
+                .scaledToFill()
+                .frame(width: geo.size.width, height: 200)
+                .clipped()
+        }
+    }
+}
+
 struct CarCard: View {
     
     @ObservedObject var imageLoader = ImageLoader()
@@ -19,12 +31,14 @@ struct CarCard: View {
             Image(systemName: "ellipsis")
         }.navigationTitle(Text(car.model)).navigationBarTitleDisplayMode(.inline), isActive: self.$goToNewView) {
             VStack {
-                ZStack{
-                    Image(uiImage: imageLoader.image).resizable().scaledToFill().frame(height: 200).clipped()
-                        .onAppear {
-                            imageLoader.loadImage(url: URL(string: car.imageUrl)!)
-                        }
-                    CircleProgressView(isLoading: $imageLoader.isLoading)
+                if car.imageUrl != nil && car.imageUrl != "" {
+                    ZStack{
+                        Image(uiImage: imageLoader.image).centerCropped()
+                            .onAppear {
+                                imageLoader.loadImage(url: URL(string: car.imageUrl!)!)
+                            }
+                        CircleProgressView(isLoading: $imageLoader.isLoading)
+                    }
                 }
                 HStack {
                     VStack(alignment: .leading) {
@@ -34,7 +48,6 @@ struct CarCard: View {
                     }
                     .layoutPriority(100)
                     Spacer()
-                    //Image(systemName: "info.circle.fill").resizable().frame(width: 30, height: 30).padding()
                 }
                 .padding ()
             }
@@ -47,7 +60,7 @@ struct CarCard: View {
 
 struct CarCard_Previews: PreviewProvider {
     static var previews: some View {
-        CarCard(car: CarInGarage(brand: "Lamborghini", model: "Aventador SVJ", year: 2020, imageUrl: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/lamborghini-aventador-svj-01-1536325819.jpg?crop=1.00xw:0.753xh;0,0.0929xh&resize=1200:*")).environment(\.colorScheme, .dark)
+        CarCard(car: CarInGarage(id: "1", brand: "Lamborghini", model: "Aventador SVJ", year: 2020, addTimestamp: Date(), imageUrl: "https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/model_detail/huracan/tecnica/s/hura_tecnica_s_02a.jpg")).environment(\.colorScheme, .dark)
     }
 }
 
@@ -58,12 +71,14 @@ struct CarDetailsView: View {
     
     var body: some View {
         ScrollView{
-            ZStack{
-                Image(uiImage: imageLoader.image).resizable().scaledToFill().frame(height: 200).clipped()
-                    .onAppear {
-                        imageLoader.loadImage(url: URL(string: car.imageUrl)!)
-                    }
-                CircleProgressView(isLoading: $imageLoader.isLoading)
+            if car.imageUrl != nil && car.imageUrl != "" {
+                ZStack{
+                    Image(uiImage: imageLoader.image).resizable().scaledToFill().frame(height: 200).clipped()
+                        .onAppear {
+                            imageLoader.loadImage(url: URL(string: car.imageUrl!)!)
+                        }
+                    CircleProgressView(isLoading: $imageLoader.isLoading)
+                }
             }
             VStack (alignment: .leading){
                 HStack{
@@ -86,33 +101,42 @@ struct CarDetailsView: View {
                     }
                 
                 Text("Scheda Tecnica").font(.headline)
-                HStack{
-                    Text("Cavalli (kW)")
-                    Spacer()
-                    Text("770 (566)")
-                }.padding([.top, .horizontal])
-                HStack{
-                    Text("Cilindrata")
-                    Spacer()
-                    Text("6498 cc")
-                }.padding([.top, .horizontal])
-                HStack{
-                    Text("1-100 km/h")
-                    Spacer()
-                    Text("2.8 sec")
-                }.padding()
+                VStack{
+                    HStack{
+                        Text("Cavalli (kW)")
+                        Spacer()
+                        Text(car.cv == nil ? "N.D." : "\(car.cv!) cv")
+                    }.padding([.top, .horizontal])
+                    HStack{
+                        Text("Cilindrata")
+                        Spacer()
+                        Text(car.cc == nil ? "N.D." : "\(car.cc!) cc")
+                    }.padding([.top, .horizontal])
+                    HStack{
+                        Text("1-100 km/h")
+                        Spacer()
+                        Text(car.zero100secs == nil ? "N.D." : "\(car.zero100secs!) sec")
+                    }.padding()
+                    HStack{
+                        Text("Km all'attivo")
+                        Spacer()
+                        Text(car.km == nil ? "N.D." : "\(car.km!) km")
+                    }.padding()
+                }
                 
                 Text("Raduni a cui ha partecipato").font(.headline)
-                HStack{
-                    Text("Raduno Pesaro)")
-                    Spacer()
-                    Text("2020-10-18")
-                }.padding([.top, .horizontal])
-                HStack{
-                    Text("Raduno Milano")
-                    Spacer()
-                    Text("2021-03-10")
-                }.padding([.top, .horizontal])
+                VStack {
+                    HStack{
+                        Text("Raduno Pesaro)")
+                        Spacer()
+                        Text("2020-10-18")
+                    }.padding([.top, .horizontal])
+                    HStack{
+                        Text("Raduno Milano")
+                        Spacer()
+                        Text("2021-03-10")
+                    }.padding([.top, .horizontal])
+                }
                 
             }.padding()
         }

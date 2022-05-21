@@ -8,54 +8,6 @@
 import Foundation
 import SwiftUI
 
-struct Manufacturer: Codable, Identifiable {
-    var num_models: Int
-    var img_url: String
-    var max_car_id: Int
-    var id: Int
-    var name: String
-    var avg_horsepower: Float
-    var avg_price: Float
-    
-    
-}
-
-struct Car: Codable, Identifiable {
-    enum CodingKeys: String, CodingKey {
-        case id, year, horsepower, make, model, price, img_url
-    }
-    
-    var id: Int
-    var year: Int
-    var horsepower: Int
-    var make: String
-    var model: String
-    var price: Int
-    var img_url: String
-    
-    //    init(from decoder: Decoder) throws {
-    //        let container = try decoder.container(keyedBy: CodingKeys.self)
-    //        self.id = try container.decode(Int.self, forKey: .id)
-    //        self.year = try container.decode(Int.self, forKey: .year)
-    //        self.horsepower = try container.decode(Int.self, forKey: .horsepower)
-    //        self.model = try container.decode(String.self, forKey: .model)
-    //        self.price = try container.decode(Int.self, forKey: .price)
-    //        self.img_url = try container.decode(String.self, forKey: .img_url)
-    //        self.make = try container.decode(Manufacturer.self, forKey: .make)
-    //      }
-}
-
-struct ManufacturerCars : Codable, Identifiable {
-    var num_models: Int
-    var img_url: String
-    var max_car_id: Int
-    var id: Int
-    var name: String
-    var avg_horsepower: Float
-    var avg_price: Float
-    var carsProduced: [Car]
-}
-
 class FetchCars: ObservableObject {
     @Published var manufacturers = [Manufacturer]()
     @Published var cars = [Car]()

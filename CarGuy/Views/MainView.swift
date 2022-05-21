@@ -17,8 +17,9 @@ enum Tabs:String {
 struct MainView: View {
     @AppStorage("log_status") var isLogged = false
     @StateObject var loginModel = LoginModelData()
-    
+    @State var logoutRequested = false
     @State var selectedTab: Tabs = .garage
+    
     var body: some View {
         if !isLogged {
             LoginSignupView(model: loginModel)
@@ -29,7 +30,9 @@ struct MainView: View {
                         .navigationBarItems(trailing:
                                                 HStack {
                             Image(systemName: "bell").padding()
-                            Image(systemName: "paperplane")
+                            NavigationLink(destination: ChatsView().navigationTitle("Chats")){
+                                Image(systemName: "paperplane")
+                            }.foregroundColor(.primary)
                         })
                 }
                 .tabItem {
@@ -37,22 +40,12 @@ struct MainView: View {
                 }.tag(Tabs.garage)
                 NavigationView{
                     GuysView().navigationTitle("Guys")
-                        .navigationBarItems(trailing:
-                                                HStack {
-                            Image(systemName: "bell").padding()
-                            Image(systemName: "paperplane")
-                        })
                 }
                 .tabItem {
                     Label("Guys", systemImage: "wrench.fill")
                 }.tag(Tabs.guys)
                 NavigationView{
                     MeetsView().navigationTitle("Meets")
-                        .navigationBarItems(trailing:
-                                                HStack {
-                            Image(systemName: "bell").padding()
-                            Image(systemName: "paperplane")
-                        })
                 }
                 
                 .tabItem {
@@ -62,9 +55,20 @@ struct MainView: View {
                     ProfileView().navigationTitle("Profile")
                         .navigationBarItems(trailing:
                                                 HStack {
-                            Image(systemName: "bell").padding()
-                            Image(systemName: "paperplane")
-                        })
+                            Image(systemName: "square.and.pencil")
+                            Button(action: {
+                                self.logoutRequested = true
+                            }) {Image(systemName: "person.fill.xmark").foregroundColor(.primary)}
+                        }).confirmationDialog("Effettuare il logout?", isPresented: $logoutRequested) {
+                            Button("Logout", role: .destructive) {
+                                loginModel.logOut()
+                                self.logoutRequested = false
+                                self.selectedTab = .garage
+                            }
+                            Button("Annulla", role: .cancel) {
+                                self.logoutRequested = false
+                            }
+                        }
                 }
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")
