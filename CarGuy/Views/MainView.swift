@@ -47,7 +47,6 @@ struct MainView: View {
                 NavigationView{
                     MeetsView().navigationTitle("Meets")
                 }
-                
                 .tabItem {
                     Label("Meets", systemImage: "person.3.fill")
                 }.tag(Tabs.meets)
