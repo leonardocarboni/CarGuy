@@ -12,6 +12,7 @@
 		995D1DFE2838D9CD0077A5C9 /* AddCarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995D1DFD2838D9CD0077A5C9 /* AddCarView.swift */; };
 		995D1E002838E2B20077A5C9 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995D1DFF2838E2B20077A5C9 /* UserModel.swift */; };
 		995D1E02283919D50077A5C9 /* CarDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995D1E01283919D50077A5C9 /* CarDetailsView.swift */; };
+		995D1E0428392A520077A5C9 /* EditCarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995D1E0328392A520077A5C9 /* EditCarView.swift */; };
 		999F147C2833C9E60006573C /* CarGuyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999F147B2833C9E60006573C /* CarGuyApp.swift */; };
 		999F147E2833C9E60006573C /* GarageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999F147D2833C9E60006573C /* GarageView.swift */; };
 		999F14802833C9E80006573C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 999F147F2833C9E80006573C /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		995D1DFD2838D9CD0077A5C9 /* AddCarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCarView.swift; sourceTree = "<group>"; };
 		995D1DFF2838E2B20077A5C9 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		995D1E01283919D50077A5C9 /* CarDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarDetailsView.swift; sourceTree = "<group>"; };
+		995D1E0328392A520077A5C9 /* EditCarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCarView.swift; sourceTree = "<group>"; };
 		999F14782833C9E60006573C /* CarGuy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CarGuy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		999F147B2833C9E60006573C /* CarGuyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarGuyApp.swift; sourceTree = "<group>"; };
 		999F147D2833C9E60006573C /* GarageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GarageView.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				99E896102837A70F0097A7C5 /* ChatsView.swift */,
 				995D1DFD2838D9CD0077A5C9 /* AddCarView.swift */,
 				995D1E01283919D50077A5C9 /* CarDetailsView.swift */,
+				995D1E0328392A520077A5C9 /* EditCarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				99E896112837A70F0097A7C5 /* ChatsView.swift in Sources */,
 				99E896132837A94E0097A7C5 /* Chat.swift in Sources */,
 				99E895F928363CF90097A7C5 /* LoginModel.swift in Sources */,
+				995D1E0428392A520077A5C9 /* EditCarView.swift in Sources */,
 				995D1E02283919D50077A5C9 /* CarDetailsView.swift in Sources */,
 				99E8961D283800060097A7C5 /* ImagePicker.swift in Sources */,
 				99E896032837813C0097A7C5 /* MessageBubble.swift in Sources */,

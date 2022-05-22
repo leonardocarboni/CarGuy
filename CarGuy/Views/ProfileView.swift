@@ -14,6 +14,8 @@ struct ProfileView: View {
     @State var nameEditor = ""
     @State var pfp = UIImage()
     
+    @ObservedObject var imageLoader = ImageLoader()
+    
     var body: some View {
         ScrollView{
             HStack{

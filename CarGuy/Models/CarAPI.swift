@@ -23,8 +23,14 @@ class FetchCars: ObservableObject {
                     
                     do {
                         self.manufacturers = try decoder.decode([Manufacturer].self, from: data)
-                    } catch {}
+                    } catch {
+                        print("Couldn't decode car manufacturers")
+                    }
+                } else {
+                    print("Couldn't decode car manufacturers")
                 }
+            } else {
+                print("Empty response for car manufacturers")
             }
         }
         

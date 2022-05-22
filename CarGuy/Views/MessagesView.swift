@@ -12,19 +12,21 @@ struct MessagesView: View {
     
     var body: some View {
         VStack {
-
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        ForEach(messagesManager.messages, id: \.id) { message in
-                            MessageBubble(message: message)
-                        }
-                    }.onChange(of: messagesManager.lastMessageId) { id in
-                        withAnimation{
-                            proxy.scrollTo(id, anchor: .bottom)
-                        }
+            ScrollViewReader { proxy in
+                ScrollView {
+                    ForEach(messagesManager.messages, id: \.id) { message in
+                        MessageBubble(message: message)
+                    }
+                }.onChange(of: messagesManager.lastMessageId) { id in
+                    withAnimation{
+                        proxy.scrollTo(id, anchor: .bottom)
+                    }
+                }.onAppear{
+                    withAnimation{
+                        proxy.scrollTo(messagesManager.lastMessageId, anchor: .bottom)
                     }
                 }
-//            }
+            }
             MessageTextField().environmentObject(messagesManager)
         }
     }
