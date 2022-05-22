@@ -69,16 +69,16 @@ struct AddCarView: View {
                     if let brand = fetch.manufacturerCars.filter({$0.id == selectedManufacturer}).first?.name {
                         if selectedCar != nil {
                             if let year = Int(selectedYear) {
-                                carManager.addCar(brand: brand, model: selectedCar!, year: year, cv: Int(selectedHp) ?? nil, cc: Int(selectedCC) ?? nil, km: Int(selectedKM) ?? nil, zero100: Float(selected0100) ?? nil, image: image.size.width != 0 ? image : nil)
-                                selectedManufacturer = -1
+                                carManager.addCar(brand: brand, model: selectedCar!, year: year, cv: Int(selectedHp) ?? nil, cc: Int(selectedCC) ?? nil, km: Int(selectedKM) ?? nil, zero100: Float(selected0100) ?? nil, image: image.size.width != 0 ? image : nil, presentation: self.presentation)
                                 selectedCar = ""
+                                selectedManufacturer = -1
                                 selectedYear = ""
                                 selectedHp = ""
                                 selectedCC = ""
                                 selectedKM = ""
                                 selected0100 = ""
                                 image = UIImage()
-                                self.presentation.wrappedValue.dismiss()
+//                                self.presentation.wrappedValue.dismiss()
                             }
                         }
                     }

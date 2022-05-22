@@ -27,7 +27,7 @@ struct GarageView: View {
                 }
             }.padding()
             ForEach(carsManager.cars) {car in
-                CarCard(car: car)
+                CarCard(carsManager: carsManager, carId: car.id)
             }
             Divider().padding()
         }
