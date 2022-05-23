@@ -12,7 +12,7 @@ struct AddCarView: View {
     //For automatic page dismiss
     @Environment(\.presentationMode) var presentation
     
-    @ObservedObject var carManager: CarsManager
+    @ObservedObject var carManager: CarsViewModel
     @ObservedObject var fetch = FetchCars()
     @State private var selectedManufacturer = -1
     @State private var selectedCar: String?
@@ -78,7 +78,6 @@ struct AddCarView: View {
                                 selectedKM = ""
                                 selected0100 = ""
                                 image = UIImage()
-//                                self.presentation.wrappedValue.dismiss()
                             }
                         }
                     }

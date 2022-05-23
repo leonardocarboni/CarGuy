@@ -1,5 +1,5 @@
 //
-//  UserModel.swift
+//  UserViewModel.swift
 //  CarGuy
 //
 //  Created by Leonardo Carboni on 21/05/22.
@@ -13,7 +13,7 @@ import FirebaseStorage
 import UIKit
 import SwiftUI
 
-class UserModel: ObservableObject {
+class UserViewModel: ObservableObject {
     @Published var email = ""
     @Published var name = ""
     @Published var pfpUrl = ""

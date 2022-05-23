@@ -22,7 +22,7 @@ extension Image {
 struct CarCard: View {
     
     @ObservedObject var imageLoader = ImageLoader()
-    @ObservedObject var carsManager: CarsManager
+    @ObservedObject var carsManager: CarsViewModel
     @State var carId: String
     
     var body: some View {

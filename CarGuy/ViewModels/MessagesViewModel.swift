@@ -1,5 +1,5 @@
 //
-//  MessagesManager.swift
+//  MessagesViewModel.swift
 //  CarGuy
 //
 //  Created by Leonardo Carboni on 20/05/22.
@@ -10,7 +10,7 @@ import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-class MessagesManager: ObservableObject {
+class MessagesViewModel: ObservableObject {
     var chatId: String
     @Published private(set) var messages: [Message] = []
     @Published private(set) var lastMessageId = ""
@@ -52,7 +52,6 @@ class MessagesManager: ObservableObject {
     func sendMessage(text: String) {
         do {
             let uuid = UUID()
-//            let newMessage = Message(id: "\(uuid)", text: text, recieved: false, timestamp: Date())
             db.collection("chats").document(chatId).collection("messages").document("\(uuid)").setData([
                 "id": "\(uuid)",
                 "sender": "\(self.currentUid!)",

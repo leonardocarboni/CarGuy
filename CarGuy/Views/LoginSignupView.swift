@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct LoginSignupView: View {
-    @ObservedObject var model: LoginModelData
+    @ObservedObject var model: LoginViewModel
     
     @State var signup = false
     
@@ -48,7 +48,7 @@ struct LoginSignupView: View {
 }
 
 struct LoginView: View {
-    @ObservedObject var model: LoginModelData
+    @ObservedObject var model: LoginViewModel
     
     var body: some View {
         VStack{
@@ -98,7 +98,7 @@ struct LoginView: View {
 }
 
 struct SignUpView: View {
-    @ObservedObject var model : LoginModelData
+    @ObservedObject var model : LoginViewModel
     
     var body: some View {
         VStack{

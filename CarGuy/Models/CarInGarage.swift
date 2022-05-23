@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CarInGarage: Identifiable{
+struct CarInGarage: Identifiable, Codable {
     var id: String
     var brand: String
     var model: String
@@ -18,8 +18,9 @@ struct CarInGarage: Identifiable{
     var cc: Int?
     var cv: Int?
     var addTimestamp: Date
+    var meets: [String]?
     
-    init(id: String, brand: String, model: String, year: Int, addTimestamp: Date, imageUrl: String?=nil, zero100secs: Float?=nil, km: Int?=nil, cc: Int?=nil, cv: Int?=nil) {
+    init(id: String, brand: String, model: String, year: Int, addTimestamp: Date, imageUrl: String?=nil, zero100secs: Float?=nil, km: Int?=nil, cc: Int?=nil, cv: Int?=nil, meets: [String]?) {
         self.id = id
         self.brand = brand.capitalized
         self.model = model.capitalized
@@ -30,5 +31,8 @@ struct CarInGarage: Identifiable{
         self.km = km
         self.cv = cv
         self.cc = cc
+        self.meets = meets
     }
+    
+    
 }

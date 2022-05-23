@@ -16,7 +16,7 @@ enum Tabs:String {
 
 struct MainView: View {
     @AppStorage("log_status") var isLogged = false
-    @StateObject var loginModel = LoginModelData()
+    @StateObject var loginModel = LoginViewModel()
     @State var logoutRequested = false
     @State var selectedTab: Tabs = .garage
     

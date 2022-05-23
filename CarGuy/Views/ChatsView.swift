@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ChatsView: View {
-    @StateObject var chatsManager = ChatsManager()
+    @StateObject var chatsManager = ChatsViewModel()
     var body: some View {
         
         ScrollView{

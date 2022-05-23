@@ -12,7 +12,7 @@ struct Chat: Identifiable, Hashable {
     var toId: String
     var toName: String
     var toPfpUrl: String
-    var messagesManager: MessagesManager
+    var messagesManager: MessagesViewModel
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)

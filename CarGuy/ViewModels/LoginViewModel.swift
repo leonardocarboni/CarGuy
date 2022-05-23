@@ -1,5 +1,5 @@
 //
-//  LoginModel.swift
+//  LoginViewModel.swift
 //  CarGuy
 //
 //  Created by Leonardo Carboni on 19/05/22.
@@ -10,7 +10,7 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 
-class LoginModelData: ObservableObject {
+class LoginViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
     @Published var name_signup = ""

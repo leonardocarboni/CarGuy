@@ -12,7 +12,7 @@ struct EditCarView: View {
     //For automatic page dismiss
     @Environment(\.presentationMode) var presentation
     
-    @ObservedObject var carManager: CarsManager
+    @ObservedObject var carManager: CarsViewModel
     @State private var selectedHp: String
     @State private var selectedCC: String
     @State private var selectedKM: String
@@ -25,7 +25,7 @@ struct EditCarView: View {
     private var carIndex: Int
     var parentPresentation: Binding<PresentationMode>
     
-    init(carManager: CarsManager, carId: String, image: UIImage?, parentPresentation: Binding<PresentationMode>) {
+    init(carManager: CarsViewModel, carId: String, image: UIImage?, parentPresentation: Binding<PresentationMode>) {
         self.carManager = carManager
         self.carId = carId
         self.carIndex = carManager.cars.firstIndex(where: {$0.id == carId})!

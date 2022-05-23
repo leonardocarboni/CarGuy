@@ -1,5 +1,5 @@
 //
-//  ChatsManager.swift
+//  ChatsViewModel.swift
 //  CarGuy
 //
 //  Created by Leonardo Carboni on 20/05/22.
@@ -11,7 +11,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 
-class ChatsManager: ObservableObject {
+class ChatsViewModel: ObservableObject {
     @Published private(set) var chats: [Chat] = []
     let db = Firestore.firestore()
     
@@ -62,7 +62,7 @@ class ChatsManager: ObservableObject {
                     self.db.collection("users").document(toId).getDocument{ doc2, err2 in
                         let toName = doc2?.data()!["name"] as? String
                         let toPfpUrl = doc2?.data()!["pfpUrl"] as? String
-                        let a = Chat(id: ch, toId: toId, toName: toName!, toPfpUrl: toPfpUrl!, messagesManager: MessagesManager(chatId: ch))
+                        let a = Chat(id: ch, toId: toId, toName: toName!, toPfpUrl: toPfpUrl!, messagesManager: MessagesViewModel(chatId: ch))
                         self.chats.append(a)
                     }
                 }

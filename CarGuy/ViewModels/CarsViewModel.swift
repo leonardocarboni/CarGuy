@@ -1,5 +1,5 @@
 //
-//  CarsManager.swift
+//  CarsViewModel.swift
 //  CarGuy
 //
 //  Created by Leonardo Carboni on 20/05/22.
@@ -14,7 +14,7 @@ import UIKit
 import SwiftUI
 import simd
 
-class CarsManager: ObservableObject {
+class CarsViewModel: ObservableObject {
     @Published private(set) var cars: [CarInGarage] = []
     let db = Firestore.firestore()
     let currentUid = Firebase.Auth.auth().currentUser!.uid
@@ -44,38 +44,19 @@ class CarsManager: ObservableObject {
                     let data_km = docData["km"] as? Int
                     let data_zero100s = docData["zero100sec"] as? Float
                     let data_addTs =  docData["addTimestamp"] as? Timestamp
-                    return CarInGarage(id: data_id!, brand: data_brand!, model: data_model!, year: data_year!, addTimestamp: data_addTs!.dateValue(), imageUrl: data_imageUrl, zero100secs: data_zero100s, km: data_km, cc: data_cc, cv: data_cv)
+                    let data_meets = docData["meets"] as? [String]
+                    return CarInGarage(id: data_id!, brand: data_brand!, model: data_model!, year: data_year!, addTimestamp: data_addTs!.dateValue(), imageUrl: data_imageUrl, zero100secs: data_zero100s, km: data_km, cc: data_cc, cv: data_cv, meets: data_meets)
                 }
             }
             self.cars.sort{$0.addTimestamp > $1.addTimestamp}
-            
-            
-            //            self.cars.removeAll()
-            //            for id in ids {
-            //                self.getCarDetails(id: id)
-            //            }
-            
-        }
-    }
-    
-    func getCarDetails(id: String) {
-        db.collection("users").document("\(currentUid)").collection("cars").document("\(id)").addSnapshotListener{ docSnap, err in
-            guard let docData = docSnap?.data() else {
-                print(String(describing: err?.localizedDescription))
-                return
+            do {
+                let userDefaults = UserDefaults.standard
+                let data = try JSONEncoder().encode(self.cars)
+                userDefaults.set(data as Data, forKey: "carsInGarage")
+            } catch {
+                print("couldn't encode data")
             }
-            
-            let data_id = docData["id"] as? String
-            let data_brand = docData["brand"] as? String
-            let data_model = docData["model"] as? String
-            let data_year = docData["year"] as? Int
-            let data_imageUrl = docData["imageUrl"] as? String
-            let data_cv = docData["cv"] as? Int
-            let data_cc = docData["cc"] as? Int
-            let data_km = docData["km"] as? Int
-            let data_zero100s = docData["zero100sec"] as? Float
-            let data_addTs =  docData["addTimestamp"] as? Timestamp
-            self.cars.append(CarInGarage(id: data_id!, brand: data_brand!, model: data_model!, year: data_year!, addTimestamp: data_addTs!.dateValue(), imageUrl: data_imageUrl, zero100secs: data_zero100s, km: data_km, cc: data_cc, cv: data_cv))
+           
             
         }
     }
@@ -168,6 +149,7 @@ class CarsManager: ObservableObject {
                 ])
                 withAnimation{
                     self.uploading = false
+                    presentation.wrappedValue.dismiss()
                 }
             }
         }

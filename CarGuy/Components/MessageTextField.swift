@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessageTextField: View {
-    @EnvironmentObject var messagesManager: MessagesManager
+    @EnvironmentObject var messagesManager: MessagesViewModel
     @State private var message = ""
     
     var body: some View {

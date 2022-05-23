@@ -11,10 +11,26 @@ struct CarDetailsView: View {
     @Environment(\.presentationMode) var presentation
     
     @ObservedObject var imageLoader = ImageLoader()
-    @ObservedObject var carManager: CarsManager
+    @ObservedObject var carManager: CarsViewModel
     var carId: String
     @State private var showingSheet = false
     @State var editing = false
+    @State var meets: [Meet]
+    
+    init(carManager: CarsViewModel, carId: String) {
+        self.carManager = carManager
+        self.carId = carId
+        let userDefaults = UserDefaults.standard
+        if let meetsData = userDefaults.object(forKey: "meets") as? Data {
+            do {
+                _meets = try State(initialValue: JSONDecoder().decode([Meet].self, from: meetsData))
+            } catch {
+                _meets = State(initialValue: [Meet]())
+            }
+        } else {
+            _meets = State(initialValue: [Meet]())
+        }
+    }
     
     var body: some View {
         
@@ -46,7 +62,7 @@ struct CarDetailsView: View {
                         
                     }.background(Color.blue).foregroundColor(.white).clipShape(RoundedRectangle(cornerRadius: 10)).padding()
                         .sheet(isPresented: $showingSheet) {
-                            //RequireAssistanceSheet(car: self.$carManager.cars[carIndex])
+                            //
                         }
                     
                     Text("Scheda Tecnica").font(.headline)
@@ -73,18 +89,34 @@ struct CarDetailsView: View {
                         }.padding()
                     }
                     
-                    Text("Raduni a cui ha partecipato").font(.headline)
+                    Text("Raduni").font(.headline)
                     VStack {
-                        HStack{
-                            Text("Raduno Pesaro)")
-                            Spacer()
-                            Text("2020-10-18")
-                        }.padding([.top, .horizontal])
-                        HStack{
-                            Text("Raduno Milano")
-                            Spacer()
-                            Text("2021-03-10")
-                        }.padding([.top, .horizontal])
+                        if carManager.cars[carIndex].meets != nil {
+                            if carManager.cars[carIndex].meets!.count > 0 {
+                                ForEach(carManager.cars[carIndex].meets!, id: \.self) { meet in
+                                    if let meetIndex = meets.firstIndex(where: {$0.id == meet}){
+                                        HStack {
+                                            Text("\(meets[meetIndex].name)")
+                                            Spacer()
+                                            Text("\(meets[meetIndex].timestamp.getFormattedDate())")
+                                        }.padding([.top, .horizontal])
+                                    }
+                                }
+                            } else {
+                                HStack{
+                                    Spacer()
+                                    Text("Nessun raduno")
+                                    Spacer()
+                                }
+                            }
+                            
+                        } else {
+                            HStack{
+                                Spacer()
+                                Text("Nessun raduno")
+                                Spacer()
+                            }
+                        }
                     }
                     
                 }.padding()
@@ -126,9 +158,3 @@ struct RequireAssistanceSheet: View {
         //TODO: FIX DARK MODE
     }
 }
-//
-//struct CarDetailsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CarDetailsView(car: CarInGarage(id: "0", brand: "Test", model: "Sample", year: 123, addTimestamp: Date()))
-//    }
-//}

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GarageView: View {
-    @StateObject var carsManager = CarsManager()
+    @StateObject var carsManager = CarsViewModel()
     var body: some View {
         ScrollView{
             HStack{

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @StateObject var userModel = UserModel()
+    @StateObject var userModel = UserViewModel()
     @State var editing = false
     @State var editPfp = false
     @State var nameEditor = ""

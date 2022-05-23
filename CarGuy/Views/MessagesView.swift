@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MessagesView: View {
-    @StateObject var messagesManager: MessagesManager
+    @StateObject var messagesManager: MessagesViewModel
     
     var body: some View {
         VStack {
