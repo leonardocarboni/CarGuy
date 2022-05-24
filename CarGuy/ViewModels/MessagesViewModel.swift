@@ -16,7 +16,8 @@ class MessagesViewModel: ObservableObject {
     @Published private(set) var lastMessageId = ""
     @Published private(set) var lastMessageTimestamp = Date()
     let db = Firestore.firestore()
-    var currentUid = Firebase.Auth.auth().currentUser?.uid
+    private var currentUid = Firebase.Auth.auth().currentUser?.uid
+    
     init(chatId: String) {
         self.chatId = chatId
         getMessages()

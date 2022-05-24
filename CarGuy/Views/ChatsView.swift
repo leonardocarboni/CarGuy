@@ -13,7 +13,11 @@ struct ChatsView: View {
         
         ScrollView{
             ForEach(chatsManager.chats, id: \.self) {chat in
-                NavigationLink(destination: MessagesView(messagesManager: chat.messagesManager).navigationTitle(chat.toName)){
+                NavigationLink(destination: MessagesView(messagesManager: chat.messagesManager).navigationTitle(chat.toName).toolbar{
+                    NavigationLink (destination: ProfileView(uid: chat.toId)){
+                        Image(systemName: "person")
+                    }
+                }){
                     HStack {
                         if chat.toPfpUrl != "" {
                             CircleImage(imageUrl: chat.toPfpUrl, diameter: 50, shadowRadius: 0).padding()

@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import SwiftUI
 
 
 class ChatsViewModel: ObservableObject {
@@ -42,6 +43,11 @@ class ChatsViewModel: ObservableObject {
                         print("Document data was empty.")
                         return
                     }
+                    
+                    if doc == nil || doc!.data() == nil {
+                        return
+                    }
+                    
                     let u1 = doc?.data()!["user1"] as? String
                     let u2 = doc?.data()!["user2"] as? String
                     
@@ -69,5 +75,26 @@ class ChatsViewModel: ObservableObject {
             }
             self.chats.sort{$0.messagesManager.lastMessageTimestamp < $1.messagesManager.lastMessageTimestamp}
         }
+    }
+    
+    func createChat(toId: String, completed: Binding<Bool>) {
+        let chatUuid = UUID()
+        let currentUid = Firebase.Auth.auth().currentUser!.uid
+        db.collection("chats").document("\(chatUuid)").setData([
+            "id": "\(chatUuid)",
+            "user1": "\(currentUid)",
+            "user2": "\(toId)"
+        ])
+        
+        db.collection("users").document("\(currentUid)").updateData([
+            "chats": FieldValue.arrayUnion(["\(chatUuid)"])
+        ])
+        
+        db.collection("users").document("\(toId)").updateData([
+            "chats": FieldValue.arrayUnion(["\(chatUuid)"])
+        ])
+        
+        
+        completed.wrappedValue.toggle()
     }
 }
