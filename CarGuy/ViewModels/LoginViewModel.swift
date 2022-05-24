@@ -126,7 +126,6 @@ class LoginViewModel: ObservableObject {
                 "id": result!.user.uid,
                 "name": self.name_signup,
                 "email": self.email_signup,
-                "password": self.password_signup,
                 "profilePic": [],
                 "cars": [],
                 "chats": []

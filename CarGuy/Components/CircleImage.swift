@@ -25,7 +25,7 @@ struct CircleImage: View {
                     placeholder: {
                         ProgressView()
                     }
-                ).clipShape(Circle()).overlay(Circle().stroke(Color.white, lineWidth: 2)).shadow(radius: shadowRadius)
+                ).frame(width: diameter, height: diameter).clipShape(Circle()).overlay(Circle().stroke(Color.white, lineWidth: 2)).shadow(radius: shadowRadius)
             }
         }
     }

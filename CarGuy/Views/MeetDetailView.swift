@@ -63,35 +63,27 @@ struct MeetDetailView: View {
                     Spacer()
                 }.padding()
                 
-                if cars.count > 0 {
-                    
-                    ForEach(cars) { car in
-                        if car.meets != nil {
-                            if car.meets!.contains("\(meetId)") {
-                                HStack{
-                                    Text(verbatim: "\(car.year) \(car.brand) \(car.model)")
-                                    Spacer()
-                                    Button(action: {
-                                        meetManager.removeCar(carId: car.id, meetId: meetId)
-                                        if let carIndex = cars.firstIndex(where: {$0.id == car.id}) {
-                                            if let meetIndex = cars[carIndex].meets!.firstIndex(where: {$0 == meetId}) {
-                                                cars[carIndex].meets!.remove(at: meetIndex)
-                                            }
-                                            
+                ForEach(cars) { car in
+                    if car.meets != nil {
+                        if car.meets!.contains("\(meetId)") {
+                            HStack{
+                                Text(verbatim: "\(car.year) \(car.brand) \(car.model)")
+                                Spacer()
+                                Button(action: {
+                                    meetManager.removeCar(carId: car.id, meetId: meetId)
+                                    if let carIndex = cars.firstIndex(where: {$0.id == car.id}) {
+                                        if let meetIndex = cars[carIndex].meets!.firstIndex(where: {$0 == meetId}) {
+                                            cars[carIndex].meets!.remove(at: meetIndex)
                                         }
-                                    }) {
-                                        Image(systemName: "xmark.circle")
-                                    }.foregroundColor(.red)
-                                }.padding()
-                            }
+                                    }
+                                }) {
+                                    Image(systemName: "xmark.circle")
+                                }.foregroundColor(.red)
+                            }.padding()
                         }
                     }
-                } else {
-                    HStack{
-                        Text("Nessuna auto iscritta")
-                        Spacer()
-                    }.padding()
                 }
+                
             }
             Button(action: {
                 showingSubscriptionSheet.toggle()

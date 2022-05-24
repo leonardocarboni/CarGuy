@@ -37,7 +37,6 @@ class MeetsViewModel: ObservableObject {
                     let data_id =  data["id"] as? String
                     let data_name =  data["name"] as? String
                     let data_coords = data["coords"] as? GeoPoint
-                    //                    let cll_coords = CLLocationCoordinate2D(latitude: data_coords!.latitude, longitude: data_coords!.longitude)
                     let data_ts =  data["timestamp"] as? Timestamp
                     let data_city = data["city"] as? String
                     let data_creatorUid = data["creatorUid"] as? String
