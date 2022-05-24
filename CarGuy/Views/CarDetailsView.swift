@@ -62,7 +62,7 @@ struct CarDetailsView: View {
                         
                     }.background(Color.blue).foregroundColor(.white).clipShape(RoundedRectangle(cornerRadius: 10)).padding()
                         .sheet(isPresented: $showingSheet) {
-                            //
+                            RequireAssistanceSheet(car: carManager.cars[carIndex])
                         }
                     
                     Text("Scheda Tecnica").font(.headline)
@@ -126,35 +126,5 @@ struct CarDetailsView: View {
                 }.foregroundColor(.primary)
             }
         }
-    }
-}
-
-
-struct RequireAssistanceSheet: View {
-    @Environment(\.dismiss) var dismiss
-    @Binding var car: CarInGarage
-    
-    var body: some View {
-        
-        VStack{
-            HStack{
-                Button (action: {
-                    dismiss()
-                }) {
-                    Text("Annulla")
-                }
-                Spacer()
-            }.padding()
-            
-            Text("Richiedi assistenza")
-            Spacer()
-            Button(action: {}) {
-                Text("Richiedi Assistenza")
-                    .padding()
-                    .frame(maxWidth: .infinity)
-            }.background(Color.blue).foregroundColor(.white).clipShape(RoundedRectangle(cornerRadius: 10)).padding()
-            
-        }
-        //TODO: FIX DARK MODE
     }
 }

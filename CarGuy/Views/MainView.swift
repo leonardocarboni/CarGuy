@@ -28,15 +28,12 @@ struct MainView: View {
                 NavigationView{
                     GarageView().navigationTitle("Garage")
                         .navigationBarItems(trailing:
-                                                HStack {
-                            Image(systemName: "bell").padding()
-                            NavigationLink(destination: ChatsView().navigationTitle("Chats")){
-                                Image(systemName: "paperplane")
-                            }.foregroundColor(.primary)
-                        })
+                                                NavigationLink(destination: ChatsView().navigationTitle("Chats")){
+                            Image(systemName: "paperplane")
+                        }.foregroundColor(.primary))
                 }
                 .tabItem {
-                    Label("Garage", systemImage: "homekit")
+                    Label("Garage", systemImage: "car.2.fill")
                 }.tag(Tabs.garage)
                 NavigationView{
                     GuysView().navigationTitle("Guys")

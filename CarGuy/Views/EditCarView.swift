@@ -48,17 +48,17 @@ struct EditCarView: View {
                             HStack{
                                 Text("Brand")
                                 Spacer()
-                                Text("\(carManager.cars[carIndex].brand)")
+                                Text(verbatim: "\(carManager.cars[carIndex].brand)")
                             }.padding()
                             HStack{
                                 Text("Modello")
                                 Spacer()
-                                Text("\(carManager.cars[carIndex].model)")
+                                Text(verbatim: "\(carManager.cars[carIndex].model)")
                             }.padding()
                             HStack{
                                 Text("Anno")
                                 Spacer()
-                                Text("\(carManager.cars[carIndex].year)")
+                                Text(verbatim: "\(carManager.cars[carIndex].year)")
                             }.padding()
                         }
                         Section(header: Text("Dettagli")){
