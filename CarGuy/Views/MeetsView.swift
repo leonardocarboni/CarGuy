@@ -8,6 +8,9 @@
 import SwiftUI
 import MapKit
 
+/**
+ Date extension for proper formatting
+ */
 extension Date {
     init(_ dateString:String) {
         let dateStringFormatter = DateFormatter()
@@ -71,10 +74,4 @@ struct MeetsView: View {
         }
     }
     
-}
-
-struct MeetsView_Previews: PreviewProvider {
-    static var previews: some View {
-        MeetsView()
-    }
 }

@@ -11,10 +11,12 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class MessagesViewModel: ObservableObject {
-    var chatId: String
+    
     @Published private(set) var messages: [Message] = []
     @Published private(set) var lastMessageId = ""
     @Published private(set) var lastMessageTimestamp = Date()
+    
+    var chatId: String
     let db = Firestore.firestore()
     private var currentUid = Firebase.Auth.auth().currentUser?.uid
     
@@ -23,6 +25,9 @@ class MessagesViewModel: ObservableObject {
         getMessages()
     }
     
+    /**
+     Ottiene la lista dei messaggi della relativa chat
+     */
     func getMessages() {
         db.collection("chats").document("\(chatId)").collection("messages").addSnapshotListener{ querySnapshot, error in
             guard let documents = querySnapshot?.documents else {
@@ -50,10 +55,13 @@ class MessagesViewModel: ObservableObject {
         }
     }
     
+    /**
+     Effettua l'invio di un messaggio nella relativa chat
+     */
     func sendMessage(text: String) {
         do {
             let uuid = UUID()
-            db.collection("chats").document(chatId).collection("messages").document("\(uuid)").setData([
+            db.collection("chats").document("\(chatId)").collection("messages").document("\(uuid)").setData([
                 "id": "\(uuid)",
                 "sender": "\(self.currentUid!)",
                 "text": "\(text)",

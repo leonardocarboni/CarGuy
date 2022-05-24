@@ -20,6 +20,9 @@ class ChatsViewModel: ObservableObject {
         getChats()
     }
     
+    /**
+     Ottiene la lista delle chat dell'utente attuale
+     */
     func getChats() {
         let currentUid = Firebase.Auth.auth().currentUser!.uid
         db.collection("users").document("\(currentUid)").addSnapshotListener{ documentSnapshot, error in
@@ -77,6 +80,9 @@ class ChatsViewModel: ObservableObject {
         }
     }
     
+    /**
+     Crea una chat tra l'utente attuale e un altro utente
+     */
     func createChat(toId: String, completed: Binding<Bool>) {
         let chatUuid = UUID()
         let currentUid = Firebase.Auth.auth().currentUser!.uid

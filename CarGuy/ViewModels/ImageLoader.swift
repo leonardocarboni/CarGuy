@@ -8,6 +8,9 @@
 import Foundation
 import SwiftUI
 
+/**
+ Asyncronous image loader
+ */
 class ImageLoader : ObservableObject{
     @Published var image = UIImage()
     @Published var isLoading = true

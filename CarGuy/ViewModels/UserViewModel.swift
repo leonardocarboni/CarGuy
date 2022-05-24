@@ -32,6 +32,9 @@ class UserViewModel: ObservableObject {
         getUserData(currentUid: uid)
     }
     
+    /**
+     Ottiene tutti i dati dell'utente
+     */
     func getUserData(currentUid: String) {
         db.collection("users").document("\(currentUid)").addSnapshotListener{ documentSnapshot, error in
             guard let document = documentSnapshot else {
@@ -99,6 +102,9 @@ class UserViewModel: ObservableObject {
         }
     }
     
+    /**
+     Aggiorna nome e foto profilo dell'utente
+     */
     func updateUserDetails(name: String, pfp: UIImage?) {
         withAnimation{
             self.updating = true
@@ -135,6 +141,9 @@ class UserViewModel: ObservableObject {
         }
     }
     
+    /**
+     Aggiunge una recensione alla lista delle recensioni dell'utente specificato
+     */
     func addReview(description: String, stars: Int, toUid: String) {
         let reviewUuid = UUID()
         db.collection("users").document("\(toUid)").collection("reviews").document("\(reviewUuid)").setData([

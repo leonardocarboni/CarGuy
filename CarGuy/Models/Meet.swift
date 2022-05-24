@@ -11,7 +11,6 @@ import MapKit
 struct Meet: Identifiable, Codable {
     let id: String
     let name: String
-//    let coords: CLLocationCoordinate2D
     let latitude: Double
     let longitude: Double
     let timestamp: Date

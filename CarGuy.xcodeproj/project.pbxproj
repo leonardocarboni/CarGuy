@@ -187,7 +187,6 @@
 			isa = PBXGroup;
 			children = (
 				999F1493283438B90006573C /* CarInGarage.swift */,
-				99E895FA2836462D0097A7C5 /* CarAPI.swift */,
 				99E89600283780E50097A7C5 /* Message.swift */,
 				99E8960928379AB40097A7C5 /* Car.swift */,
 				99E8960E28379D7B0097A7C5 /* Review.swift */,
@@ -195,7 +194,6 @@
 				995D1E07283A24D30077A5C9 /* Meet.swift */,
 				99410FAC283B6F4E00A7D10B /* Place.swift */,
 				99410FB4283B7EB100A7D10B /* Assistance.swift */,
-				99F39AC0283CF116009B9E5A /* LoadingView.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -217,6 +215,7 @@
 		99E8960C28379C450097A7C5 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				99E895FA2836462D0097A7C5 /* CarAPI.swift */,
 				99E8960628378D680097A7C5 /* MessagesViewModel.swift */,
 				99E896182837B7BD0097A7C5 /* ChatsViewModel.swift */,
 				99E8961A2837F42D0097A7C5 /* CarsViewModel.swift */,
@@ -234,6 +233,7 @@
 		99E8960D28379C5B0097A7C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				99F39AC0283CF116009B9E5A /* LoadingView.swift */,
 				999F14892833CAE90006573C /* MainView.swift */,
 				99E8CFF728354D950013BD6D /* LoginSignupView.swift */,
 				999F147D2833C9E60006573C /* GarageView.swift */,

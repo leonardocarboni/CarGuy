@@ -25,9 +25,3 @@ struct MessageBubble: View {
     }
     
 }
-
-struct MessageBubble_Previews: PreviewProvider {
-    static var previews: some View {
-        MessageBubble(message: Message(id: "", text: "Sarei interessato ad un detail della mia ferrari 458 italia nella zona di napoli. quanto vuoi?", recieved: false, timestamp: Date())).environment(\.colorScheme, .light)
-    }
-}

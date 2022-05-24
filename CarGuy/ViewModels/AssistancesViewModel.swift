@@ -22,7 +22,7 @@ class AssistancesViewModel: ObservableObject {
     }
     
     /**
-     Get list of assistances
+     Ottiene la lista delle assistenze
      */
     func getAssistances() {
         db.collection("assistances").addSnapshotListener{ querySnapshot, error in
@@ -67,7 +67,7 @@ class AssistancesViewModel: ObservableObject {
     }
     
     /**
-     Accept an assistance
+     Segnala l'accettazione di una assistenza da parte
      */
     func acceptAssistance(assistanceId: String) {
         let index = self.assistances.firstIndex(where: {$0.id == assistanceId})!
@@ -80,7 +80,7 @@ class AssistancesViewModel: ObservableObject {
     }
     
     /**
-     Add assistance to the database
+     Aggiunge una assistenza
      */
     func addAssistance(car: CarInGarage, assistanceType: String, description: String, priceOffer: Int, latitude: Double, longitude: Double) {
         do {

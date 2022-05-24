@@ -26,12 +26,6 @@ struct MessageTextField: View {
     }
 }
 
-//struct DMTextField_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MessageTextField().environmentObject(MessagesManager())
-//    }
-//}
-
 struct CustomTextField: View {
     var placeholder: Text
     @Binding var text: String
@@ -43,7 +37,6 @@ struct CustomTextField: View {
             if text.isEmpty {
                 placeholder.opacity(0.5)
             }
-            
             TextField("", text: $text, onEditingChanged: editingChanged, onCommit: commit)
         }
     }

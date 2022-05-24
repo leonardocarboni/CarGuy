@@ -24,6 +24,9 @@ class CarsViewModel: ObservableObject {
         getCars()
     }
     
+    /**
+     Ottiene la lista delle automobili dell'utente
+     */
     func getCars() {
         self.cars.removeAll()
         db.collection("users").document("\(currentUid)").collection("cars").addSnapshotListener{ querySnapshot, error in
@@ -56,11 +59,14 @@ class CarsViewModel: ObservableObject {
             } catch {
                 print("couldn't encode data")
             }
-           
+            
             
         }
     }
     
+    /**
+     Aggiunge un'automobile
+     */
     func addCar(brand: String, model: String, year: Int, cv: Int?, cc: Int?, km: Int?, zero100: Float?, image: UIImage?, presentation: Binding<PresentationMode>) {
         do {
             withAnimation{
@@ -155,6 +161,9 @@ class CarsViewModel: ObservableObject {
         }
     }
     
+    /**
+     Rimuove un'automobile registrata
+     */
     func removeCar(carId: String, editPresentation: Binding<PresentationMode>, detailPresentation: Binding<PresentationMode>) {
         withAnimation{
             self.uploading = true
@@ -174,6 +183,9 @@ class CarsViewModel: ObservableObject {
         }
     }
     
+    /**
+     Aggiorna i dati di un'automobile registrata
+     */
     func updateCar(carId: String, km: String, cc: String, cv: String, zero100: String, image: UIImage?) {
         withAnimation{
             self.uploading = true

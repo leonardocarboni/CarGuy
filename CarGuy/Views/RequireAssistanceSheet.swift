@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct RequireAssistanceSheet: View {
     @Environment(\.dismiss) var dismiss
     

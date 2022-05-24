@@ -64,10 +64,3 @@ struct Rating: View {
         }
     }
 }
-
-//
-//struct ReviewCard_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ReviewCard(review: Review(text: "Testo di prova", stars: 4, from: "Mauro", pfpUrl: "https://magazine.unibo.it/archivio/2018/inaugurato-il-nuovo-campus-di-cesena-allex-zuccherificio/cesena2.jpeg"))
-//    }
-//}

@@ -20,7 +20,7 @@ struct CarInGarage: Identifiable, Codable {
     var addTimestamp: Date
     var meets: [String]?
     
-    init(id: String, brand: String, model: String, year: Int, addTimestamp: Date, imageUrl: String?=nil, zero100secs: Float?=nil, km: Int?=nil, cc: Int?=nil, cv: Int?=nil, meets: [String]?) {
+    init(id: String, brand: String, model: String, year: Int, addTimestamp: Date, imageUrl: String? = nil, zero100secs: Float? = nil, km: Int? = nil, cc: Int? = nil, cv: Int? = nil, meets: [String]?) {
         self.id = id
         self.brand = brand.capitalized
         self.model = model.capitalized
@@ -33,6 +33,4 @@ struct CarInGarage: Identifiable, Codable {
         self.cc = cc
         self.meets = meets
     }
-    
-    
 }

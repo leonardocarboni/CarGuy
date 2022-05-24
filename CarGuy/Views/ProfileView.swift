@@ -126,9 +126,3 @@ struct ProfileView: View {
         }
     }
 }
-
-struct ExploreView_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView()
-    }
-}

@@ -57,9 +57,3 @@ struct CarCard: View {
         }
     }
 }
-//
-//struct CarCard_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CarCard(car: CarInGarage(id: "1", brand: "Lamborghini", model: "Aventador SVJ", year: 2020, addTimestamp: Date(), imageUrl: "https://www.lamborghini.com/sites/it-en/files/DAM/lamborghini/facelift_2019/model_detail/huracan/tecnica/s/hura_tecnica_s_02a.jpg")).environment(\.colorScheme, .dark)
-//    }
-//}

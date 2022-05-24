@@ -31,12 +31,6 @@ struct CircleImage: View {
     }
 }
 
-struct CircleImage_Previews: PreviewProvider {
-    static var previews: some View {
-        CircleImage(imageUrl: "https://magazine.unibo.it/archivio/2018/inaugurato-il-nuovo-campus-di-cesena-allex-zuccherificio/cesena2.jpeg", diameter: 150)
-    }
-}
-
 struct CircleProgressView: View {
     @Binding var isLoading: Bool
     
