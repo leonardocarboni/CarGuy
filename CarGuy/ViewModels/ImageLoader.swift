@@ -2,7 +2,7 @@
 //  ImageLoader.swift
 //  CarGuy
 //
-//  Created by Leonardo Carboni on 17/05/22.
+//  Created by Leonardo Carboni on 24/05/22.
 //
 
 import Foundation

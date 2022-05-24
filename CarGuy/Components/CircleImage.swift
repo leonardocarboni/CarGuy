@@ -12,16 +12,20 @@ struct CircleImage: View {
     var diameter: CGFloat
     var shadowRadius = 4.0
     
-    @ObservedObject var imageLoader = ImageLoader()
-    
     var body: some View {
         ZStack {
             if imageUrl != "" {
-                Image(uiImage: imageLoader.image).resizable().scaledToFill().frame(width: diameter, height: diameter, alignment: .center).onAppear {
-                    imageLoader.loadImage(url: URL(string: imageUrl)!)
-                }.clipShape(Circle()).overlay(Circle().stroke(Color.white, lineWidth: 2)).shadow(radius: shadowRadius)
-                
-                CircleProgressView(isLoading: $imageLoader.isLoading)
+                AsyncImage(
+                    url: URL(string: imageUrl)!,
+                    content: { image in
+                        image.resizable()
+                            .scaledToFill()
+                            .frame(maxWidth: diameter, maxHeight: diameter)
+                    },
+                    placeholder: {
+                        ProgressView()
+                    }
+                ).clipShape(Circle()).overlay(Circle().stroke(Color.white, lineWidth: 2)).shadow(radius: shadowRadius)
             }
         }
     }
