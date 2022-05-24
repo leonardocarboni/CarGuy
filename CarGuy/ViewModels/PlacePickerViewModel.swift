@@ -13,6 +13,7 @@ class PlacePickerViewModel: ObservableObject {
     private var searchDistance: Double = 10000
     private var defaultSearchCoordinates: CLLocationCoordinate2D?
     
+    
     @Published var places: [Place] = []
     
     @Published var searchText = "" {
@@ -23,9 +24,17 @@ class PlacePickerViewModel: ObservableObject {
         }
     }
     
+    func getCurrentCoords() -> CLLocationCoordinate2D {
+        if let currentCoordinate = locationManager.location?.coordinate {
+            return currentCoordinate
+        } else {
+            return MapDetails.startingLocation
+        }
+    }
+    
     private func search(text: String) {
         let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = text
+        request.naturalLanguageQuery = text.lowercased()
         request.pointOfInterestFilter = .includingAll
         request.resultTypes = .pointOfInterest
         
