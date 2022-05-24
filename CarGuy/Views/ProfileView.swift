@@ -8,28 +8,43 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @StateObject var userModel = UserViewModel()
+    @StateObject var userModel: UserViewModel
+    
     @State var editing = false
     @State var editPfp = false
+    @State var reviewUser = false
     @State var nameEditor = ""
     @State var pfp = UIImage()
     
     @ObservedObject var imageLoader = ImageLoader()
     
+    var isSelf: Bool
+    
+    var uid: String
+    
+    init(uid: String) {
+        _userModel = StateObject(wrappedValue: UserViewModel(uid: uid))
+        isSelf = false
+        self.uid = uid
+    }
+    
+    init() {
+        _userModel = StateObject(wrappedValue: UserViewModel())
+        isSelf = true
+        self.uid = ""
+    }
+    
     var body: some View {
         ScrollView{
             HStack{
                 if editing {
-                    ZStack {
-                        if userModel.pfpUrl != "" {
-                            CircleImage(imageUrl: userModel.pfpUrl, diameter: 130, shadowRadius: 7).padding().blur(radius: 2)
-                        }
-                        Button(action: {
-                            editPfp = true
-                        }) {
-                            Image(systemName: "photo.circle").resizable()
-                        }.frame(width: 130, height: 130).padding(.all, 20)
-                    }
+                    
+                    Button(action: {
+                        editPfp = true
+                    }) {
+                        Image(systemName: "photo.circle").resizable().padding()
+                    }.frame(width: 130, height: 130).padding(.all, 20)
+                    
                     TextField(text: $nameEditor){
                         Text("Nome")
                     }
@@ -59,33 +74,55 @@ struct ProfileView: View {
                 }.frame(minWidth: 0, maxWidth: .infinity)
             }.padding()
             
+            if !isSelf {
+                Button(action: {
+                    reviewUser.toggle()
+                }) {
+                    Text("Recensisci")
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                }.background(Color.blue).foregroundColor(.white).clipShape(RoundedRectangle(cornerRadius: 10)).padding()
+            }
             
-            ForEach(userModel.reviews) {rev in
-                ReviewCard(review: rev)
+            if (userModel.reviews.count > 0){
+                ForEach(userModel.reviews) {rev in
+                    ReviewCard(review: rev)
+                }
+            } else {
+                VStack {
+                    Spacer()
+                    Text("Nessuna recensione").padding()
+                    Spacer()
+                }
             }
             
             
         }.toolbar {
-            Button(action: {
-                if editing {
-                    if nameEditor != userModel.name || pfp.size.width > 0 {
-                        userModel.updateUserDetails(name: nameEditor, pfp: pfp.size.width > 0 ? pfp : nil)
-                        pfp = UIImage()
+            if isSelf {
+                Button(action: {
+                    if editing {
+                        if nameEditor != userModel.name || pfp.size.width > 0 {
+                            userModel.updateUserDetails(name: nameEditor, pfp: pfp.size.width > 0 ? pfp : nil)
+                            pfp = UIImage()
+                        }
+                    } else {
+                        nameEditor = userModel.name
                     }
-                } else {
-                    nameEditor = userModel.name
-                }
-                editing.toggle()
-            }){
-                if editing {
-                    Image(systemName: "icloud.and.arrow.up.fill")
-                } else {
-                    Image(systemName: "square.and.pencil")
-                }
-                
-            }.foregroundColor(.primary)
+                    editing.toggle()
+                }){
+                    if editing {
+                        Image(systemName: "icloud.and.arrow.up.fill")
+                    } else {
+                        Image(systemName: "square.and.pencil")
+                    }
+                    
+                }.foregroundColor(.primary)
+            }
         }.sheet(isPresented: $editPfp) {
             ImagePicker(sourceType: .photoLibrary, selectedImage: self.$pfp)
+        }
+        .sheet(isPresented: $reviewUser) {
+            ReviewSheet(userManager: userModel, uid: uid)
         }
     }
 }

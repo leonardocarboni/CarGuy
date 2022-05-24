@@ -25,11 +25,14 @@ class UserViewModel: ObservableObject {
     let db = Firestore.firestore()
     
     init() {
-        getUserData()
+        getUserData(currentUid: Firebase.Auth.auth().currentUser!.uid)
     }
     
-    func getUserData() {
-        let currentUid = Firebase.Auth.auth().currentUser!.uid
+    init(uid: String) {
+        getUserData(currentUid: uid)
+    }
+    
+    func getUserData(currentUid: String) {
         db.collection("users").document("\(currentUid)").addSnapshotListener{ documentSnapshot, error in
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")
@@ -130,5 +133,15 @@ class UserViewModel: ObservableObject {
         withAnimation{
             self.updating = false
         }
+    }
+    
+    func addReview(description: String, stars: Int, toUid: String) {
+        let reviewUuid = UUID()
+        db.collection("users").document("\(toUid)").collection("reviews").document("\(reviewUuid)").setData([
+            "id": "\(reviewUuid)",
+            "reviewerUid": "\(Firebase.Auth.auth().currentUser!.uid)",
+            "stars": stars,
+            "text": description
+        ])
     }
 }
