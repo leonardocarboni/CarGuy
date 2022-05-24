@@ -28,19 +28,19 @@ extension Date {
     }
 }
 
-private var userCoords = CLLocationCoordinate2D(latitude: 43.96, longitude: 12.65)
-private let userPos = CLLocation(latitude: userCoords.latitude, longitude: userCoords.longitude)
-
 struct MeetsView: View {
     
     @StateObject var meetsManager = MeetsViewModel()
+    
+    @StateObject var locationManager = LocationViewModel()
     
     var body: some View {
         List {
             Section(header: Text("Nelle vicinanze")) {
                 ForEach(meetsManager.meets) { item in
+                    let userPos = locationManager.locationManager == nil || locationManager.locationManager!.location == nil ? CLLocation(latitude: 43.96, longitude: 12.65) : locationManager.locationManager!.location!
                     let distance = userPos.distance(from: CLLocation(latitude: item.latitude, longitude: item.longitude))
-                    if (distance < 200000) {
+                    if (distance < 200000 && item.timestamp > Date()) {
                         NavigationLink(destination: MeetDetailView(meetManager: meetsManager, meetId: item.id).navigationBarTitle(item.name)) {
                             VStack (alignment: .leading){
                                 Text(item.name).font(.title2)
@@ -52,18 +52,22 @@ struct MeetsView: View {
             }
             Section(header: Text("Tutti gli eventi")) {
                 ForEach(meetsManager.meets) {event in
-                    NavigationLink(destination: MeetDetailView(meetManager: meetsManager, meetId: event.id).navigationBarTitle(event.name)) {
-                        VStack (alignment: .leading){
-                            Text(event.name).font(.title2)
-                            Text("\(event.city) - \(event.timestamp.getFormattedDate())").font(.subheadline)
+                    if event.timestamp > Date() {
+                        NavigationLink(destination: MeetDetailView(meetManager: meetsManager, meetId: event.id).navigationBarTitle(event.name)) {
+                            VStack (alignment: .leading){
+                                Text(event.name).font(.title2)
+                                Text("\(event.city) - \(event.timestamp.getFormattedDate())").font(.subheadline)
+                            }
                         }
                     }
                 }
             }
         }.toolbar{
-            NavigationLink(destination: AddMeetSheet(meetsManager: meetsManager).navigationBarTitle("Crea Raduno")) {
+            NavigationLink(destination: AddMeetView(meetsManager: meetsManager).navigationBarTitle("Crea Raduno")) {
                 Image(systemName: "plus.circle")
             }.foregroundColor(.primary)
+        }.onAppear{
+            locationManager.checkIfLocationServicesIsEnabled()
         }
     }
     

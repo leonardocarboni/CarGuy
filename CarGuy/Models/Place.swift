@@ -20,4 +20,10 @@ struct Place: Hashable {
         self.longitude = mapItem.placemark.coordinate.longitude
     }
     
+    init(name: String, coords: CLLocationCoordinate2D) {
+        self.name = name
+        self.latitude = coords.latitude
+        self.longitude = coords.longitude
+    }
+    
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct AddMeetSheet: View {
+struct AddMeetView: View {
     @Environment(\.presentationMode) var presentation
     
     @State var showSheet = false

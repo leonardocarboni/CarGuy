@@ -34,63 +34,64 @@ struct MeetDetailView: View {
     }
     
     var body: some View {
-        //        VStack{
-        ScrollView{
-            Map(coordinateRegion: $region, annotationItems: [meetManager.meets[meetIndex]]){
-                MapMarker(coordinate: CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude))
-            }.frame(height: 300)
-            
-            if meetManager.meets[meetIndex].imageUrl != nil {
-                CircleImage(imageUrl: meetManager.meets[meetIndex].imageUrl!, diameter: 100, shadowRadius: 7).offset(y: -30).padding(.bottom, -30)
-            }
-            
-            Text(meetManager.meets[meetIndex].name).font(.title).bold()
-            
-            HStack{
-                Text(meetManager.meets[meetIndex].city).font(.headline)
-                Spacer()
-                Text(meetManager.meets[meetIndex].timestamp.getFormattedDate()).font(.headline)
-            }.padding()
-            
-            HStack {
-                Text("Partecipanti già confermati: ").font(.headline)
-                Spacer()
-                Text("\(meetManager.meets[meetIndex].partecipantUids.count)").font(.headline)
-            }.padding()
-            
-            HStack {
-                Text("Le tue auto iscritte:")
-                Spacer()
-            }.padding()
-            
-            if cars.count > 0 {
+        VStack{
+            ScrollView{
+                Map(coordinateRegion: $region, annotationItems: [meetManager.meets[meetIndex]]){
+                    MapMarker(coordinate: CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude))
+                }.frame(height: 300)
                 
-                ForEach(cars) { car in
-                    if car.meets != nil {
-                        if car.meets!.contains("\(meetId)") {
-                            HStack{
-                                Text(verbatim: "\(car.year) \(car.brand) \(car.model)")
-                                Spacer()
-                                Button(action: {
-                                    meetManager.removeCar(carId: car.id, meetId: meetId)
-                                    if let carIndex = cars.firstIndex(where: {$0.id == car.id}) {
-                                        if let meetIndex = cars[carIndex].meets!.firstIndex(where: {$0 == meetId}) {
-                                            cars[carIndex].meets!.remove(at: meetIndex)
-                                        }
-                                        
-                                    }
-                                }) {
-                                    Image(systemName: "xmark.circle")
-                                }.foregroundColor(.red)
-                            }.padding()
-                        }
-                    }
+                if meetManager.meets[meetIndex].imageUrl != nil {
+                    CircleImage(imageUrl: meetManager.meets[meetIndex].imageUrl!, diameter: 100, shadowRadius: 7).offset(y: -30).padding(.bottom, -30)
                 }
-            } else {
+                
+                Text(meetManager.meets[meetIndex].name).font(.title).bold()
+                
                 HStack{
-                    Text("Nessuna auto iscritta")
+                    Text(meetManager.meets[meetIndex].city).font(.headline)
+                    Spacer()
+                    Text(meetManager.meets[meetIndex].timestamp.getFormattedDate()).font(.headline)
+                }.padding()
+                
+                HStack {
+                    Text("Partecipanti già confermati: ").font(.headline)
+                    Spacer()
+                    Text("\(meetManager.meets[meetIndex].partecipantUids.count)").font(.headline)
+                }.padding()
+                
+                HStack {
+                    Text("Le tue auto iscritte:")
                     Spacer()
                 }.padding()
+                
+                if cars.count > 0 {
+                    
+                    ForEach(cars) { car in
+                        if car.meets != nil {
+                            if car.meets!.contains("\(meetId)") {
+                                HStack{
+                                    Text(verbatim: "\(car.year) \(car.brand) \(car.model)")
+                                    Spacer()
+                                    Button(action: {
+                                        meetManager.removeCar(carId: car.id, meetId: meetId)
+                                        if let carIndex = cars.firstIndex(where: {$0.id == car.id}) {
+                                            if let meetIndex = cars[carIndex].meets!.firstIndex(where: {$0 == meetId}) {
+                                                cars[carIndex].meets!.remove(at: meetIndex)
+                                            }
+                                            
+                                        }
+                                    }) {
+                                        Image(systemName: "xmark.circle")
+                                    }.foregroundColor(.red)
+                                }.padding()
+                            }
+                        }
+                    }
+                } else {
+                    HStack{
+                        Text("Nessuna auto iscritta")
+                        Spacer()
+                    }.padding()
+                }
             }
             Button(action: {
                 showingSubscriptionSheet.toggle()
@@ -100,7 +101,6 @@ struct MeetDetailView: View {
                     .frame(maxWidth: .infinity)
                 
             }.background(Color.blue).foregroundColor(.white).clipShape(RoundedRectangle(cornerRadius: 10)).padding()
-            //        }
         }.sheet(isPresented: $showingSubscriptionSheet) {
             SubscribeCarSheet(meetManager: meetManager, meetId: meetId, cars: $cars)
         }
