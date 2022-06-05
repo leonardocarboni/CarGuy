@@ -37,11 +37,9 @@ struct RequireAssistanceSheet: View {
             Text("Richiedi assistenza").font(.title)
             
             Form{
-                
                 Section(header: Text("Dettagli")) {
                     TextField(text: $assistanceType){
                         Text("Tipo di assistenza")
-                        
                     }
                     TextField(text: $priceOffer){
                         Text("Prezzo offerto (€)")
@@ -56,7 +54,7 @@ struct RequireAssistanceSheet: View {
                     }) {Text(place == nil || place!.name == "Posizione Attuale" ? "Seleziona Posizione" : "\(place!.name)")}
                     Button (action: {
                         place = Place(name: "Posizione Attuale", coords: placeViewModel.getCurrentCoords())
-                    }) {Text(place != nil ? "\(place!.name)" : "Usa Posizione Attuale")}
+                    }) {Text("Usa Posizione Attuale")}
                 }
             }.padding()
             
@@ -64,6 +62,7 @@ struct RequireAssistanceSheet: View {
             Button(action: {
                 if assistanceType != "" && place != nil{
                     assistanceManager.addAssistance(car: car, assistanceType: assistanceType, description: description, priceOffer: Int(priceOffer) ?? 0, latitude: place!.latitude, longitude: place!.longitude)
+                    dismiss();
                 } else {
                     alertShown.toggle()
                 }

@@ -13,7 +13,7 @@ struct GuysView: View {
     @StateObject var locationManager = LocationViewModel()
     
     var body: some View {
-        Map(coordinateRegion: $locationManager.region, showsUserLocation: true,  annotationItems: assistancesManager.assistances.filter({ !$0.completed && $0.creatorUid != Firebase.Auth.auth().currentUser!.uid })){ assist in
+        Map(coordinateRegion: $locationManager.region, showsUserLocation: true,  annotationItems: assistancesManager.assistances.filter({ !$0.completed && $0.creatorUid != Firebase.Auth.auth().currentUser?.uid })){ assist in
             MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: assist.latitude, longitude: assist.longitude)) {
                 MapPinView(assistanceManager: assistancesManager, assistanceId: assist.id).padding(.vertical, 60)
             }
